@@ -25,7 +25,7 @@ export default function PostList() {
     queryFn: fetchPosts,
   });
 
-  const deletePostMutation = useMutation({
+  const { mutate: deletePostMutation, isPending: deletePending } = useMutation({
     mutationFn: deletePost,
     onSuccess: (data, variables) => {
       console.log("variables ", variables);
@@ -34,7 +34,7 @@ export default function PostList() {
     },
   });
 
-  const addPostMutation = useMutation({
+  const { mutate: addPostMutation } = useMutation({
     mutationFn: addPost,
     onSuccess: (newPost) => {
       handlePostAddSuccessBanner();
@@ -134,6 +134,7 @@ export default function PostList() {
         posts={postsList}
         isLoading={isLoading}
         deletePost={deletePostMutation}
+        deletePending={deletePending}
         setIsAddPostModalOpen={setIsAddPostModalOpen}
       />
     </>

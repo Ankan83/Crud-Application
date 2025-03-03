@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { UseMutationResult } from "@tanstack/react-query";
+import { UseMutateFunction, UseMutationResult } from "@tanstack/react-query";
 
 import { Posts, PostWithoutUserID } from "@/types/posts";
 
@@ -10,8 +10,9 @@ type Props = {
   handleEdit: (post: PostWithoutUserID) => void;
   posts?: Posts[];
   isLoading: boolean;
-  deletePost: UseMutationResult<any, Error, number, unknown>;
+  deletePost: UseMutateFunction<Object, Error, number, unknown>;
   setIsAddPostModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  deletePending: boolean;
 };
 
 export default function RenderPosts({
@@ -19,6 +20,7 @@ export default function RenderPosts({
   posts,
   isLoading,
   deletePost,
+  deletePending,
   setIsAddPostModalOpen,
 }: Props) {
   if (isLoading)
@@ -52,10 +54,10 @@ export default function RenderPosts({
               </button>
               <button
                 className="btn btn-error"
-                onClick={() => deletePost.mutate(post.id)}
-                disabled={deletePost.isPending}
+                onClick={() => deletePost(post.id)}
+                disabled={deletePending}
               >
-                {deletePost.isPending ? "Deleting..." : "Delete"}
+                {deletePending ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>

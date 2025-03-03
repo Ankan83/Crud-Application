@@ -1,15 +1,16 @@
 "use client";
 
-import { UseMutationResult } from "@tanstack/react-query";
+import { FormData } from "@/schema/formSchema";
+import { UseMutateFunction } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 type Props = {
-  addPostMutation: UseMutationResult<
-    any,
+  addPostMutation: UseMutateFunction<
+    Object,
     Error,
     {
-      title: any;
-      content: any;
+      title: string;
+      body: string;
     },
     unknown
   >;
@@ -17,15 +18,10 @@ type Props = {
 };
 
 export default function AddPostForm({ addPostMutation, closeModal }: Props) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<FormData>();
 
-  if (!addPostMutation || !addPostMutation.mutate) {
-    console.error("Error: addPostMutation is undefined!");
-    return <p className="text-red-500">Error loading form.</p>;
-  }
-
-  const onSubmit = (data: any) => {
-    addPostMutation.mutate(data);
+  const onSubmit = (data: { title: string; body: string }) => {
+    addPostMutation(data);
   };
 
   return (
@@ -43,7 +39,7 @@ export default function AddPostForm({ addPostMutation, closeModal }: Props) {
       <label className="form-control">
         <span className="label-text">Content</span>
         <textarea
-          {...register("content")}
+          {...register("body")}
           className="textarea textarea-bordered w-full"
           required
         ></textarea>
