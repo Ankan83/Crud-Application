@@ -1,26 +1,65 @@
+"use client";
+
 import Link from "next/link";
 
-export default async function RenderPosts(){
-    
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const postList = await response.json();
+import { UseMutationResult } from "@tanstack/react-query";
+
+import { Posts, PostWithoutUserID } from "@/types/posts";
+
+type Props = {
+  handleEdit: (post: PostWithoutUserID) => void;
+  posts?: Posts[];
+  isLoading: boolean;
+  deletePost: UseMutationResult<any, Error, number, unknown>;
+  setIsAddPostModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function RenderPosts({
+  handleEdit,
+  posts,
+  isLoading,
+  deletePost,
+  setIsAddPostModalOpen,
+}: Props) {
+  if (isLoading)
+    return <span className="loading loading-bars loading-lg"></span>;
 
   return (
-    <div className="flex ">
-      <div className="flex flex-wrap gap-2 justify-center items-center">
-        {postList.map((post, index) => {
-          return (
+    <div className="container mx-auto p-6">
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold mb-4">Posts</h2>
+        <button
+          className="btn btn-primary"
+          onClick={() => setIsAddPostModalOpen(true)}
+        >
+          Add Post
+        </button>
+      </div>
 
-            <div className="card bg-base-100 shadow-xl w-1/4" key={index}>
-              <Link href={`/post/${post.id}`}  >
-                <div className="card-body">
-                  <h2 className="card-title">{post.title}</h2>
-                  <p>{post.body}</p>
-                </div>
-              </Link>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {posts?.map((post: PostWithoutUserID) => (
+          <div key={post.id} className="card bg-base-100 shadow-lg p-4">
+            <Link href={`/post/${post.id}`}>
+              <h3 className="text-lg font-bold">{post.title}</h3>
+              <p>{post.body}</p>
+            </Link>
+            <div className="mt-4 flex gap-2">
+              <button
+                className="btn btn-warning"
+                onClick={() => handleEdit(post)}
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-error"
+                onClick={() => deletePost.mutate(post.id)}
+                disabled={deletePost.isPending}
+              >
+                {deletePost.isPending ? "Deleting..." : "Delete"}
+              </button>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

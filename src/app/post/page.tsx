@@ -1,7 +1,5 @@
-import RenderPosts from "@/components/RenderPosts";
+import PostList from "@/components/PostList";
 
-export default function PostList() {
-    return (
-        <RenderPosts />
-    );
+export default function Page() {
+  return <PostList />;
 }

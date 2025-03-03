@@ -1,5 +1,5 @@
-import RenderPosts from "@/components/RenderPosts";
+import PostList from "@/components/PostList";
 
 export default async function Home() {
-  return <RenderPosts />
+  return <PostList />;
 }
