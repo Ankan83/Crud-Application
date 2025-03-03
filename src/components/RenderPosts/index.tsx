@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { UseMutateFunction, UseMutationResult } from "@tanstack/react-query";
+import { UseMutateFunction } from "@tanstack/react-query";
 
 import { Posts, PostWithoutUserID } from "@/types/posts";
 
@@ -10,7 +10,7 @@ type Props = {
   handleEdit: (post: PostWithoutUserID) => void;
   posts?: Posts[];
   isLoading: boolean;
-  deletePost: UseMutateFunction<Object, Error, number, unknown>;
+  deletePost: UseMutateFunction<object, Error, number, unknown>;
   setIsAddPostModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   deletePending: boolean;
 };

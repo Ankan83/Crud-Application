@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 type Props = {
   addPostMutation: UseMutateFunction<
-    Object,
+    object,
     Error,
     {
       title: string;
