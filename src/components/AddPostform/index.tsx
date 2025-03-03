@@ -1,8 +1,22 @@
 "use client";
 
+import { UseMutationResult } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-export default function AddPostForm({ addPostMutation, closeModal }) {
+type Props = {
+  addPostMutation: UseMutationResult<
+    any,
+    Error,
+    {
+      title: any;
+      content: any;
+    },
+    unknown
+  >;
+  closeModal: () => void;
+};
+
+export default function AddPostForm({ addPostMutation, closeModal }: Props) {
   const { register, handleSubmit } = useForm();
 
   if (!addPostMutation || !addPostMutation.mutate) {
