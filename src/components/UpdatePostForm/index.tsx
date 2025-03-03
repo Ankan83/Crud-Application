@@ -12,7 +12,7 @@ type Props = {
   setEditingPost: React.Dispatch<
     React.SetStateAction<null | PostWithoutUserID>
   >;
-  handleSuccessBanner: Function;
+  handleSuccessBanner: () => void;
   updatePostList: (data: Posts) => void;
 };
 

@@ -1,4 +1,4 @@
-export async function addPost(postData: { title: any; content: any; }) {
+export async function addPost(postData: { title: string; content: string; }) {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -14,7 +14,5 @@ export async function addPost(postData: { title: any; content: any; }) {
     }
   
    return  await response.json();
-    // console.log("newPost ", newPost)
-    // return { ...newPost, id: Math.floor(Math.random() * 1000) + 101 }; 
   }
   
